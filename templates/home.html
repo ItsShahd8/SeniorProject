@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Welcome to the Home Security System</h1>
+        <p>Use this system to protect your home by using face recognition to monitor access to your property.</p>
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{{ url_for('login') }}" class="btn btn-primary mr-3">Login</a>
+            <a href="{{ url_for('signup') }}" class="btn btn-secondary">Sign Up</a>
+        </div>
+    </div>
+</body>
+</html>
