@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS accounts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     home_name TEXT,
     password TEXT,
-    email TEXT UNIQUE
+    email TEXT UNIQUE,
+    phone TEXT
 )
 ''')
 cursor.execute('''
@@ -115,7 +116,6 @@ def add_user():
 
     return render_template('add_user.html')
 
-
 @app.route('/delete_user/<int:user_id>')
 def delete_user(user_id):
     if 'user_id' not in session:
@@ -141,11 +141,42 @@ def settings():
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
-    if request.method == 'POST':
-        # Handle settings updates (e.g., email, password changes)
-        pass
+    user_id = session['user_id']
 
-    return render_template('settings.html')
+    if request.method == 'POST':
+        # Handle updates for password, phone number, and email
+        new_password = request.form.get('password')
+        new_phone = request.form.get('phone')
+        new_email = request.form.get('email')
+
+        try:
+            if new_password:
+                hashed_password = generate_password_hash(new_password)
+                cursor.execute("UPDATE accounts SET password = ? WHERE id = ?", (hashed_password, user_id))
+            
+            if new_phone:
+                cursor.execute("UPDATE accounts SET phone = ? WHERE id = ?", (new_phone, user_id))
+            
+            if new_email:
+                cursor.execute("UPDATE accounts SET email = ? WHERE id = ?", (new_email, user_id))
+            
+            conn.commit()
+            return "Settings updated successfully!"
+        except sqlite3.IntegrityError:
+            return "Error: The email is already in use. Please try a different one."
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
+    
+    # Fetch the current user data to display on the settings page
+    cursor.execute("SELECT email, phone FROM accounts WHERE id = ?", (user_id,))
+    account = cursor.fetchone()
+    return render_template('settings.html', email=account[0], phone=account[1])
+
+@app.route('/logout')
+def logout():
+    # Clear the session
+    session.clear()
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)

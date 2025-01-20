@@ -8,6 +8,13 @@
 </head>
 <body>
     <h1>Add User</h1>
+    <header>
+        <h1>Add User</h1>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a> <!-- Logout Link -->
+        </nav>
+    </header>    
     <form method="POST" enctype="multipart/form-data" action="/add_user">
         <label for="name">User Name:</label>
         <input type="text" id="name" name="name" required>

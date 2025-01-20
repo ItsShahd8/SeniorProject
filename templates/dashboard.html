@@ -7,8 +7,15 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <p>Welcome, {{ session['user_id'] }}</p>
+    <header>
+        <h1>Dashboard</h1>
+        <nav>
+            <a href="/add_user">Add User</a>
+            <a href="/settings">Settings</a>
+            <a href="/logout">Logout</a> <!-- Logout Link -->
+        </nav>
+    </header>
+
     <h2>Registered Users</h2>
     <table border="1">
         <thead>
@@ -28,7 +35,5 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="/add_user">Add User</a>
-    <a href="/logout">Logout</a>
 </body>
 </html>
