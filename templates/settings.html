@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Account Settings</h1>
+    <h1>Settings</h1>
     <form method="POST" action="/settings">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ email }}" placeholder="Update your email">
+        <input type="email" id="email" name="email" value="{{ email }}" required>
 
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" value="{{ phone }}" placeholder="Update your phone number">
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" value="{{ phone }}" required>
 
         <label for="password">New Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter new password">
+        <input type="password" id="password" name="password">
 
-        <button type="submit">Update Settings</button>
+        <button type="submit">Update</button>
     </form>
     <a href="/dashboard">Back to Dashboard</a>
 </body>

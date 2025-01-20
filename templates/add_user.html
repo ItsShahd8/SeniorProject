@@ -8,25 +8,12 @@
 </head>
 <body>
     <h1>Add User</h1>
-    <header>
-        <h1>Add User</h1>
-        <nav>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/logout">Logout</a> <!-- Logout Link -->
-        </nav>
-    </header>    
     <form method="POST" enctype="multipart/form-data" action="/add_user">
         <label for="name">User Name:</label>
         <input type="text" id="name" name="name" required>
 
-        <label for="left_photo">Left Side Photo:</label>
-        <input type="file" id="left_photo" name="left_photo" accept="image/*" required>
-
-        <label for="middle_photo">Middle (Front) Photo:</label>
-        <input type="file" id="middle_photo" name="middle_photo" accept="image/*" required>
-
-        <label for="right_photo">Right Side Photo:</label>
-        <input type="file" id="right_photo" name="right_photo" accept="image/*" required>
+        <label for="photos">Upload 3 Photos:</label>
+        <input type="file" id="photos" name="photos" accept="image/*" multiple required>
 
         <button type="submit">Add User</button>
     </form>

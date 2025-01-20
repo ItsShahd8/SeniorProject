@@ -4,23 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <header>
-        <h1>Dashboard</h1>
-        <nav>
-            <a href="/add_user">Add User</a>
-            <a href="/settings">Settings</a>
-            <a href="/logout">Logout</a> <!-- Logout Link -->
-        </nav>
-    </header>
-
-    <h2>Registered Users</h2>
-    <table border="1">
+    <h1>Dashboard</h1>
+    <table>
         <thead>
             <tr>
-                <th>Name</th>
+                <th>User Name</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,11 +19,14 @@
             <tr>
                 <td>{{ user[1] }}</td>
                 <td>
-                    <a href="/delete_user/{{ user[0] }}">Delete</a>
+                    <a href="{{ url_for('delete_user', user_id=user[0]) }}">Delete</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <a href="/add_user">Add New User</a>
+    <a href="/settings">Settings</a>
+    <a href="/logout">Logout</a>
 </body>
 </html>

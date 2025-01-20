@@ -42,10 +42,11 @@ def signup():
         home_name = request.form['home_name']
         password = generate_password_hash(request.form['password'])
         email = request.form['email']
+        phone = request.form['phone']
 
         try:
-            cursor.execute("INSERT INTO accounts (home_name, password, email) VALUES (?, ?, ?)",
-                           (home_name, password, email))
+            cursor.execute("INSERT INTO accounts (home_name, password, email, phone) VALUES (?, ?, ?, ?)",
+                           (home_name, password, email, phone))
             conn.commit()
             return redirect(url_for('login'))
         except sqlite3.IntegrityError:
@@ -85,56 +86,29 @@ def add_user():
     if request.method == 'POST':
         name = request.form['name']
         account_id = session['user_id']
-        dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
-        os.makedirs(dataset_path, exist_ok=True)
 
-        # Retrieve individual files
-        left_photo = request.files.get('left_photo')
-        middle_photo = request.files.get('middle_photo')
-        right_photo = request.files.get('right_photo')
+        # Save uploaded photos with unique filenames directly in the InData folder
+        files = request.files.getlist('photos')
+        if len(files) != 3:
+            return "Please upload exactly three photos."
 
-        # Ensure all three photos are uploaded
-        if not left_photo or not middle_photo or not right_photo:
-            return "Please upload all three photos: left, middle, and right."
+        photo_paths = []  # To store photo paths for the database
+        for i, file in enumerate(files):
+            unique_filename = f"user_{account_id}_{name}_{i + 1}.jpg"  # Unique name for each photo
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+            file.save(file_path)
+            photo_paths.append(file_path)
 
-        # Save the photos with specific naming conventions
-        photo_mapping = {
-            'left.jpg': left_photo,
-            'middle.jpg': middle_photo,
-            'right.jpg': right_photo,
-        }
-        for filename, photo in photo_mapping.items():
-            file_path = os.path.join(dataset_path, filename)
-            photo.save(file_path)
-
-        # Add the user to the database
+        # Save user data in the database
         cursor.execute("INSERT INTO users (account_id, name, dataset_path) VALUES (?, ?, ?)",
-                       (account_id, name, dataset_path))
+                       (account_id, name, ','.join(photo_paths)))  # Save paths as comma-separated string
         conn.commit()
-
         return redirect(url_for('dashboard'))
 
     return render_template('add_user.html')
 
-@app.route('/delete_user/<int:user_id>')
-def delete_user(user_id):
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
 
-    cursor.execute("SELECT dataset_path FROM users WHERE id = ? AND account_id = ?", (user_id, session['user_id']))
-    user = cursor.fetchone()
 
-    if user:
-        dataset_path = user[0]
-        if os.path.exists(dataset_path):
-            for file in os.listdir(dataset_path):
-                os.remove(os.path.join(dataset_path, file))
-            os.rmdir(dataset_path)
-
-        cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
-        conn.commit()
-
-    return redirect(url_for('dashboard'))
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
@@ -161,20 +135,41 @@ def settings():
                 cursor.execute("UPDATE accounts SET email = ? WHERE id = ?", (new_email, user_id))
             
             conn.commit()
-            return "Settings updated successfully!"
+            return redirect(url_for('dashboard'))
         except sqlite3.IntegrityError:
             return "Error: The email is already in use. Please try a different one."
         except Exception as e:
             return f"An error occurred: {str(e)}"
-    
+
     # Fetch the current user data to display on the settings page
     cursor.execute("SELECT email, phone FROM accounts WHERE id = ?", (user_id,))
     account = cursor.fetchone()
     return render_template('settings.html', email=account[0], phone=account[1])
 
+@app.route('/delete_user/<int:user_id>')
+def delete_user(user_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # Get the dataset path for the user
+    cursor.execute("SELECT dataset_path FROM users WHERE id = ? AND account_id = ?", (user_id, session['user_id']))
+    user = cursor.fetchone()
+
+    if user:
+        dataset_paths = user[0].split(',')  # Split the comma-separated photo paths
+        for photo_path in dataset_paths:
+            if os.path.exists(photo_path):
+                os.remove(photo_path)  # Delete the individual photo
+
+        # Delete the user from the database
+        cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
+        conn.commit()
+
+    return redirect(url_for('dashboard'))
+
+
 @app.route('/logout')
 def logout():
-    # Clear the session
     session.clear()
     return redirect(url_for('login'))
 
