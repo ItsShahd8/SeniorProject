@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Access Control System</h1>
+    </header>
+
+    <main>
+        <form action="/access_control" method="POST">
+            <button type="submit">Start Face Recognition</button>
+        </form>
+
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Secure IoT Home System</p>
+    </footer>
+</body>
+</html>
