@@ -87,20 +87,34 @@ def add_user():
         dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
         os.makedirs(dataset_path, exist_ok=True)
 
-        files = request.files.getlist('photos')
-        if len(files) != 3:
-            return "Please upload exactly three photos."
+        # Retrieve individual files
+        left_photo = request.files.get('left_photo')
+        middle_photo = request.files.get('middle_photo')
+        right_photo = request.files.get('right_photo')
 
-        for i, file in enumerate(files):
-            file_path = os.path.join(dataset_path, f'image_{i+1}.jpg')
-            file.save(file_path)
+        # Ensure all three photos are uploaded
+        if not left_photo or not middle_photo or not right_photo:
+            return "Please upload all three photos: left, middle, and right."
 
+        # Save the photos with specific naming conventions
+        photo_mapping = {
+            'left.jpg': left_photo,
+            'middle.jpg': middle_photo,
+            'right.jpg': right_photo,
+        }
+        for filename, photo in photo_mapping.items():
+            file_path = os.path.join(dataset_path, filename)
+            photo.save(file_path)
+
+        # Add the user to the database
         cursor.execute("INSERT INTO users (account_id, name, dataset_path) VALUES (?, ?, ?)",
                        (account_id, name, dataset_path))
         conn.commit()
+
         return redirect(url_for('dashboard'))
 
     return render_template('add_user.html')
+
 
 @app.route('/delete_user/<int:user_id>')
 def delete_user(user_id):

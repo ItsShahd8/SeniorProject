@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add New User</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Add New User</h2>
-        <form method="POST" action="{{ url_for('add_user') }}" enctype="multipart/form-data">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" name="name" required>
-            </div>
-            <p>Click the "Capture Images" button and follow the instructions to capture images for face recognition.</p>
-            <button type="submit" class="btn btn-primary">Capture Images</button>
-        </form>
-    </div>
+    <h1>Add User</h1>
+    <form method="POST" enctype="multipart/form-data" action="/add_user">
+        <label for="name">User Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="left_photo">Left Side Photo:</label>
+        <input type="file" id="left_photo" name="left_photo" accept="image/*" required>
+
+        <label for="middle_photo">Middle (Front) Photo:</label>
+        <input type="file" id="middle_photo" name="middle_photo" accept="image/*" required>
+
+        <label for="right_photo">Right Side Photo:</label>
+        <input type="file" id="right_photo" name="right_photo" accept="image/*" required>
+
+        <button type="submit">Add User</button>
+    </form>
+    <a href="/dashboard">Back to Dashboard</a>
 </body>
 </html>
