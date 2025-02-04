@@ -1,11 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        /* General Body Styling */
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        /* Title Styling */
+        h1 {
+            font-size: 55px;
+            font-weight: bold;
+            color: #00FFFF; /* Cyan */
+            text-shadow: 3px 3px 15px #00FFFF;
+            margin-bottom: 20px;
+        }
+
+        /* Paragraph Styling */
+        p {
+            font-size: 24px;
+            color: lightgray;
+            margin-bottom: 30px;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.3);
+            margin: 15px;
+        }
+
+        /* Login Button */
+        .btn-login {
+            background-color: #FFD700; /* Gold */
+            color: black;
+        }
+
+        .btn-login:hover {
+            background-color: #FFA500; /* Orange */
+            transform: scale(1.1);
+        }
+
+        /* Sign Up Button */
+        .btn-signup {
+            background-color: #1E90FF; /* DodgerBlue */
+            color: white;
+        }
+
+        .btn-signup:hover {
+            background-color: #FF6347; /* Tomato */
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
+
     <h1>Welcome to Your Secure IoT System</h1>
-    <p><a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('signup') }}">Sign Up</a></p>
+    <p>
+        <a href="{{ url_for('login') }}" class="btn btn-login">Login</a>
+        <a href="{{ url_for('signup') }}" class="btn btn-signup">Sign Up</a>
+    </p>
+
 </body>
 </html>
-
