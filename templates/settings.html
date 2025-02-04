@@ -4,22 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 36px;
+            color: #FF6347;
+        }
+        label, input, button {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        input, button {
+            padding: 10px;
+            background-color: #2F4F4F;
+            color: white;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button {
+            background-color: #FFD700;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #FF6347;
+        }
+    </style>
 </head>
 <body>
-    <h1>Settings</h1>
+    <h1>Account Settings</h1>
     <form method="POST" action="/settings">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ email }}" required>
+        <input type="email" id="email" name="email" value="{{ email }}" placeholder="Update your email">
 
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" name="phone" value="{{ phone }}" required>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" value="{{ phone }}" placeholder="Update your phone number">
 
         <label for="password">New Password:</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" placeholder="Enter new password">
 
-        <button type="submit">Update</button>
+        <button type="submit">Update Settings</button>
     </form>
-    <a href="/dashboard">Back to Dashboard</a>
 </body>
 </html>

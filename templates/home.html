@@ -2,16 +2,40 @@
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 48px;
+            color: #FF6347;
+        }
+        p {
+            font-size: 20px;
+            color: #32CD32;
+        }
+        .btn-primary, .btn-secondary {
+            background-color: #FFD700;
+            color: black;
+            font-size: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            background-color: #FF6347;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Welcome to the Home Security System</h1>
-        <p>Use this system to protect your home by using face recognition to monitor access to your property.</p>
-        <div class="d-flex justify-content-center mt-5">
-            <a href="{{ url_for('login') }}" class="btn btn-primary mr-3">Login</a>
-            <a href="{{ url_for('signup') }}" class="btn btn-secondary">Sign Up</a>
-        </div>
+    <div class="container">
+        <h1>Welcome to Home Security</h1>
+        <p>Use this system to protect your home with face recognition.</p>
+        <a href="{{ url_for('login') }}" class="btn-primary">Login</a>
+        <a href="{{ url_for('signup') }}" class="btn-secondary">Sign Up</a>
     </div>
 </body>
 </html>

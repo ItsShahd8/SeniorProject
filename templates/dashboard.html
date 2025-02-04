@@ -4,29 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 36px;
+            color: #FF6347;
+        }
+        nav a {
+            color: #32CD32;
+            font-size: 20px;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        nav a:hover {
+            color: #FFD700;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #fff;
+        }
+        th {
+            background-color: #2F4F4F;
+        }
+        .btn-danger {
+            background-color: #FF6347;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-danger:hover {
+            background-color: #FF4500;
+        }
+    </style>
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>User Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{ user[1] }}</td>
-                <td>
-                    <a href="{{ url_for('delete_user', user_id=user[0]) }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="/add_user">Add New User</a>
-    <a href="/settings">Settings</a>
-    <a href="/logout">Logout</a>
+    <header>
+        <h1>Welcome to Your Dashboard</h1>
+        <nav>
+            <a href="{{ url_for('add_user') }}">Add User</a>
+            <a href="{{ url_for('settings') }}">Settings</a>
+            <a href="{{ url_for('logout') }}" class="btn-danger">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Registered Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[1] }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_user', user_id=user[0]) }}" class="btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
+
+
+

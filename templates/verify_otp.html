@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
     <style>
         body {
             background-color: black;
@@ -33,23 +35,18 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Create New Account</h2>
-        <form method="POST" action="{{ url_for('signup') }}">
-            <label>Home Name</label>
-            <input type="text" name="home_name" required>
-
-            <label>Password</label>
-            <input type="password" name="password" required>
-
-            <label>Email</label>
-            <input type="email" name="email" required>
-
-            <label>Phone</label>
-            <input type="tel" name="phone" required>
-
-            <button type="submit">Sign Up</button>
+    <div class="container mt-5">
+        <h2>Verify OTP</h2>
+        <form method="POST" action="{{ url_for('verify_otp') }}">
+            <div class="form-group">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Verify</button>
         </form>
+        <div class="mt-3">
+            <a href="{{ url_for('login') }}" style="color: #32CD32;">Back to Login</a>
+        </div>
     </div>
 </body>
 </html>

@@ -1,9 +1,33 @@
-<header>
-    <h1>Welcome to Home Face Detection</h1>
-    <nav>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/add_user">Add User</a>
-        <a href="/settings">Settings</a>
-        <a href="/logout">Logout</a>
-    </nav>
-</header>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to your dashboard, {{ account_name }}!</h1>
+    
+    <h2>Registered Users</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user[1] }}</td>
+                <td>
+                    <a href="/delete_user/{{ user[0] }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/add_user">Add New User</a>
+    <a href="/settings">Settings</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>

@@ -4,19 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 36px;
+            color: #FF6347;
+        }
+        header nav a {
+            color: #32CD32;
+            font-size: 20px;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        header nav a:hover {
+            color: #FFD700;
+        }
+        label, input, button {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        input, button {
+            padding: 10px;
+            background-color: #2F4F4F;
+            color: white;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button {
+            background-color: #FFD700;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #FF6347;
+        }
+    </style>
 </head>
 <body>
     <h1>Add User</h1>
+    <header>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>    
     <form method="POST" enctype="multipart/form-data" action="/add_user">
         <label for="name">User Name:</label>
         <input type="text" id="name" name="name" required>
 
-        <label for="photos">Upload 3 Photos:</label>
-        <input type="file" id="photos" name="photos" accept="image/*" multiple required>
+        <label for="left_photo">Left Side Photo:</label>
+        <input type="file" id="left_photo" name="left_photo" accept="image/*" required>
+
+        <label for="middle_photo">Middle (Front) Photo:</label>
+        <input type="file" id="middle_photo" name="middle_photo" accept="image/*" required>
+
+        <label for="right_photo">Right Side Photo:</label>
+        <input type="file" id="right_photo" name="right_photo" accept="image/*" required>
 
         <button type="submit">Add User</button>
     </form>
-    <a href="/dashboard">Back to Dashboard</a>
+    <a href="/dashboard" style="color: #32CD32;">Back to Dashboard</a>
 </body>
 </html>
+

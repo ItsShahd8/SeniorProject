@@ -2,21 +2,47 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            font-size: 36px;
+            color: #FF6347;
+        }
+        label, input, button {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        input, button {
+            padding: 10px;
+            background-color: #2F4F4F;
+            color: white;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button {
+            background-color: #FFD700;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #FF6347;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container">
         <h2>Login</h2>
         <form method="POST" action="{{ url_for('login') }}">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" name="email" required>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Login</button>
         </form>
     </div>
 </body>
